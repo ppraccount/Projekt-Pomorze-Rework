@@ -14,12 +14,23 @@
             --discord: #5865F2;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        /* UKRYWANIE KURSORA SYSTEMOWEGO TYLKO NA KOMPUTERACH */
+        @media (pointer: fine) {
+            * { cursor: none; }
+        }
+
         body { background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
 
         /* --- TWOJA KLASYKA: KURSOR --- */
         #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
         #cursor-outline { width: 30px; height: 30px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: all 0.15s ease-out; opacity: 0.5; }
+
+        /* UKRYWANIE TWOJEGO KURSORA NA TELEFONACH */
+        @media (pointer: coarse) {
+            #cursor, #cursor-outline { display: none !important; }
+        }
 
         /* --- HERO BANER --- */
         header { 
