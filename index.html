@@ -52,6 +52,8 @@
             text-decoration: none;
             transition: 0.3s;
             font-weight: 700;
+            border: none;
+            background: none;
         }
 
         .lang-btn.active { color: var(--accent); }
@@ -128,9 +130,9 @@
     <div id="cursor-outline"></div>
 
     <div class="lang-switch">
-        <a href="#" class="lang-btn active">PL</a>
+        <button class="lang-btn active" onclick="setLang('pl')">PL</button>
         <span style="color: #333;">|</span>
-        <a href="#" class="lang-btn">EN</a>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
     </div>
 
     <header>
@@ -138,70 +140,46 @@
         <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
         
         <div class="nav-categories reveal">
-            <a href="#o-grze" class="cat-btn">O grze</a>
-            <a href="#tereny" class="cat-btn">Regiony</a>
-            <a href="#co-robic" class="cat-btn">Co robić?</a>
-            <a href="#discord" class="cat-btn">Społeczność</a>
+            <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
+            <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
+            <a href="#co-robic" class="cat-btn" id="nav-todo">Co robić?</a>
+            <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
         </div>
     </header>
 
     <div class="container">
         
         <section id="o-grze" class="reveal">
-            <h2 class="section-title">O projekcie</h2>
-            <p style="font-size: 1.4rem; color: #bbb; max-width: 800px;">
+            <h2 class="section-title" id="title-about">O projekcie</h2>
+            <p id="desc-about" style="font-size: 1.4rem; color: #bbb; max-width: 800px;">
                 Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.
             </p>
         </section>
 
         <section id="tereny" class="reveal">
-            <h2 class="section-title">Twoja okolica</h2>
+            <h2 class="section-title" id="title-regions">Twoja okolica</h2>
             <div class="info-grid">
-                <div class="info-card">
-                    <h3>Rychnowy</h3>
-                    <p>Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Krery</h3>
-                    <p>Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!</p>
-                </div>
-                <div class="info-card">
-                    <h3>Kiełpin</h3>
-                    <p>Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Zielątkowo</h3>
-                    <p>Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Czarnoszki</h3>
-                    <p>Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Krzyżanki</h3>
-                    <p>Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.</p>
-                </div>
+                <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.</p></div>
+                <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!</p></div>
+                <div class="info-card"><h3 id="v3-t">Kiełpin</h3><p id="v3-d">Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.</p></div>
+                <div class="info-card"><h3 id="v4-t">Zielątkowo</h3><p id="v4-d">Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.</p></div>
+                <div class="info-card"><h3 id="v5-t">Czarnoszki</h3><p id="v5-d">Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.</p></div>
+                <div class="info-card"><h3 id="v6-t">Krzyżanki</h3><p id="v6-d">Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.</p></div>
             </div>
         </section>
 
         <section id="co-robic" class="reveal">
-            <h2 class="section-title">Co u nas znajdziesz?</h2>
+            <h2 class="section-title" id="title-todo">Co u nas znajdziesz?</h2>
             <div class="info-grid">
-                <div class="info-card">
-                    <h3>Praca Kuriera</h3>
-                    <p>Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Wolna Jazda</h3>
-                    <p>Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.</p>
-                </div>
+                <div class="info-card"><h3 id="job1-t">Praca Kuriera</h3><p id="job1-d">Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.</p></div>
+                <div class="info-card"><h3 id="job2-t">Wolna Jazda</h3><p id="job2-d">Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.</p></div>
             </div>
         </section>
 
         <section id="discord" class="discord-area reveal">
-            <h2 class="section-title">Bądź na bieżąco</h2>
-            <p style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
-            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank">DOŁĄCZ DO NAS</a>
+            <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
+            <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
+            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
         </section>
 
     </div>
@@ -211,9 +189,64 @@
     </footer>
 
     <script>
+        const translations = {
+            pl: {
+                navA: "O grze", navR: "Regiony", navT: "Co robić?", navD: "Społeczność",
+                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
+                tR: "Twoja okolica",
+                v1t: "Rychnowy", v1d: "Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.",
+                v2t: "Krery", v2d: "Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!",
+                v3t: "Kiełpin", v3d: "Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.",
+                v4t: "Zielątkowo", v4d: "Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.",
+                v5t: "Czarnoszki", v5d: "Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.",
+                v6t: "Krzyżanki", v6d: "Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.",
+                tTodo: "Co u nas znajdziesz?", j1t: "Praca Kuriera", j1d: "Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.",
+                j2t: "Wolna Jazda", j2d: "Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.",
+                tD: "Bądź na bieżąco", dD: "Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.", bD: "DOŁĄCZ DO NAS"
+            },
+            en: {
+                navA: "About", navR: "Regions", navT: "Activities", navD: "Community",
+                tA: "The Project", dA: "Project Pomorze is more than just a map. It's a vibe you feel when driving on worn-out asphalt at dusk. We're building a world where every road, house, and tree has its place.",
+                tR: "Your Neighborhood",
+                v1t: "Rychnowy", v1d: "The place where everything happens. Refuel, chat with others at the gas station, or just sit in traffic at the main intersection.",
+                v2t: "Krery", v2d: "A typical Polish village. Tight turns between fences and massive grain silos visible from afar. Watch those shoulders!",
+                v3t: "Kiełpin", v3d: "A peaceful town surrounded by dense forest. The best choice if you want to escape the city noise and enjoy the views.",
+                v4t: "Zielątkowo", v4d: "A region for those who like business. Warehouses, companies, and lots of concrete. The heart of local industry.",
+                v5t: "Czarnoszki", v5d: "A village with a brick-vibe. It has something mysterious and raw that you won't find anywhere else on the map.",
+                v6t: "Krzyżanki", v6d: "A small settlement where every detail matters. Perfect for slowing down and seeing every fence and shrine we've crafted.",
+                tTodo: "What's inside?", j1t: "Courier Job", j1d: "Load the packages and hit the road. Door to door – discover every corner of the map while earning cash.",
+                j2t: "Free Drive", j2d: "Don't like jobs? No problem. Grab a car, turn on the radio, and just drive through the county at your own pace.",
+                tD: "Stay Updated", dD: "Latest screenshots, test dates, and discussions – it all happens on our Discord.", bD: "JOIN US"
+            }
+        };
+
+        function setLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            const l = translations[lang];
+            document.getElementById('nav-about').innerText = l.navA;
+            document.getElementById('nav-regions').innerText = l.navR;
+            document.getElementById('nav-todo').innerText = l.navT;
+            document.getElementById('nav-discord').innerText = l.navD;
+            document.getElementById('title-about').innerText = l.tA;
+            document.getElementById('desc-about').innerText = l.dA;
+            document.getElementById('title-regions').innerText = l.tR;
+            document.getElementById('v1-t').innerText = l.v1t; document.getElementById('v1-d').innerText = l.v1d;
+            document.getElementById('v2-t').innerText = l.v2t; document.getElementById('v2-d').innerText = l.v2d;
+            document.getElementById('v3-t').innerText = l.v3t; document.getElementById('v3-d').innerText = l.v3d;
+            document.getElementById('v4-t').innerText = l.v4t; document.getElementById('v4-d').innerText = l.v4d;
+            document.getElementById('v5-t').innerText = l.v5t; document.getElementById('v5-d').innerText = l.v5d;
+            document.getElementById('v6-t').innerText = l.v6t; document.getElementById('v6-d').innerText = l.v6d;
+            document.getElementById('title-todo').innerText = l.tTodo;
+            document.getElementById('job1-t').innerText = l.j1t; document.getElementById('job1-d').innerText = l.j1d;
+            document.getElementById('job2-t').innerText = l.j2t; document.getElementById('job2-d').innerText = l.j2d;
+            document.getElementById('title-discord').innerText = l.tD;
+            document.getElementById('desc-discord').innerText = l.dD;
+            document.getElementById('btn-discord').innerText = l.bD;
+        }
+
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
-
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -222,15 +255,9 @@
             outline.style.transform = 'translate(-11px, -11px)';
         });
 
-        document.querySelectorAll('a, .info-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(5)';
-                outline.style.opacity = '0';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                outline.style.opacity = '0.5';
-            });
+        document.querySelectorAll('a, button, .info-card').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(5)'; outline.style.opacity = '0'; });
+            el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; outline.style.opacity = '0.5'; });
         });
 
         const reveals = document.querySelectorAll('.reveal');
