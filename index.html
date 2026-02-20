@@ -22,7 +22,6 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* --- BLOKADY --- */
         * { 
             margin: 0; 
             padding: 0; 
@@ -44,7 +43,7 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- TOP NAV (TABS & LANG) --- */
+        /* --- TOP NAV --- */
         .top-nav-left { position: fixed; top: 20px; left: 20px; z-index: 1001; }
         .top-nav-right { position: fixed; top: 20px; right: 20px; z-index: 1001; }
 
@@ -77,24 +76,18 @@
         .tab-content { display: none; opacity: 0; transition: opacity 0.4s ease; }
         .tab-content.active { display: block; opacity: 1; }
 
-        /* --- UI --- */
         .back-to-top {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             z-index: 1001;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--accent);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            opacity: 0;
-            visibility: hidden;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent); opacity: 0; visibility: hidden;
             transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
@@ -121,7 +114,6 @@
 
         .discord-area { text-align: center; padding: 100px 20px; }
         .discord-link { display: inline-block; background: var(--discord); color: white; padding: 18px 40px; border-radius: 5px; text-decoration: none; font-weight: 700; transition: 0.3s; }
-        .discord-link:hover { transform: scale(1.05); }
 
         footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; border-top: 1px solid #1a1a1a; }
 
@@ -198,23 +190,22 @@
                 <h2 class="section-title" id="title-jobs">Praca i Zarobki</h2>
                 <div class="info-grid">
                     <div class="info-card">
-                        <h3 id="j1-t">Prace dorywcze</h3>
-                        <p id="j1-d">Od koszenia trawników po zbieranie jabłek u sąsiada. Idealne na start, by zarobić na pierwszy samochód.</p>
+                        <h3 id="j1-t">Courier Job</h3>
+                        <p id="j1-d">Wsiadaj w furgonetkę i dostarczaj paczki do mieszkańców Pomorza. Szybkie trasy, pewny pieniądz.</p>
                     </div>
                     <div class="info-card">
-                        <h3 id="j2-t">Frakcje</h3>
-                        <p id="j2-d">Dołącz do Policji, Straży Pożarnej lub Pogotowia. Stabilna pensja i odpowiedzialność za region.</p>
+                        <h3 id="j2-t">Free Roam Jobs</h3>
+                        <p id="j2-d">Znajduj zlecenia bezpośrednio na mapie. Od holowania po drobne naprawy w terenie.</p>
                     </div>
                     <div class="info-card">
-                        <h3 id="j3-t">Ciemna Strona</h3>
-                        <p id="j3-d">Napady na sklepy, handel nielegalnym towarem. Szybka kasa, ale wielkie ryzyko.</p>
+                        <h3 id="j3-t">Frakcje & Służby</h3>
+                        <p id="j3-d">Dołącz do Policji, Straży lub Pogotowia. Pilnuj porządku i pomagaj innym graczom za stałą pensję.</p>
                     </div>
                 </div>
             </section>
 
             <section id="discord" class="discord-area reveal">
                 <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
-                <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Dołącz do tysięcy graczy i śledź postępy prac.</p>
                 <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
             </section>
         </div>
@@ -223,7 +214,6 @@
     <div id="cars-content" class="tab-content">
         <div class="container" style="padding-top: 150px;">
             <h2 class="section-title" id="title-cars">Pojazdy</h2>
-            <p style="color: #888; margin-bottom: 40px;">Lista unikalnych maszyn przygotowanych specjalnie dla Reworku.</p>
             <div class="soon-box">
                 <div class="soon-text" id="text-soon">WKRÓTCE</div>
             </div>
@@ -237,20 +227,18 @@
             pl: {
                 tabH: "Home", tabV: "Pojazdy",
                 navA: "O grze", navR: "Regiony", navJ: "Zarobki", navD: "Społeczność",
-                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór.",
-                tR: "Twoja okolica", tJobs: "Praca i Zarobki", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
-                j1t: "Prace dorywcze", j1d: "Od koszenia trawników po zbieranie jabłek. Idealne na start.",
-                j2t: "Frakcje", j2d: "Policja, Straż, Pogotowie. Służba i stabilna kasa.",
-                j3t: "Ciemna Strona", j3d: "Napady i ryzyko. Szybki zysk dla odważnych."
+                tA: "O projekcie", tR: "Twoja okolica", tJobs: "Praca i Zarobki", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
+                j1t: "Courier Job", j1d: "Dostarczaj paczki mieszkańcom Pomorza. Szybkie trasy, pewny pieniądz.",
+                j2t: "Free Roam Jobs", j2d: "Znajduj zlecenia bezpośrednio na mapie. Eksploruj i zarabiaj.",
+                j3t: "Frakcje & Służby", j3d: "Policja, Straż, Pogotowie. Stała pensja i prestiż."
             },
             en: {
                 tabH: "Home", tabV: "Vehicles",
                 navA: "About", navR: "Regions", navJ: "Jobs", navD: "Community",
-                tA: "The Project", dA: "Project Pomorze is more than just a map. Experience the unique atmosphere of Pomerania.",
-                tR: "Your Neighborhood", tJobs: "Work & Economy", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
-                j1t: "Odd Jobs", j1d: "From mowing lawns to apple picking. Best for starters.",
-                j2t: "Factions", j2d: "Police, Fire, EMS. Service with a steady salary.",
-                j3t: "Dark Side", j3d: "Robberies and risks. Fast cash for the brave."
+                tA: "The Project", tR: "Your Neighborhood", tJobs: "Economy", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
+                j1t: "Courier Job", j1d: "Deliver packages across Pomerania. Fast routes, solid pay.",
+                j2t: "Free Roam Jobs", j2d: "Find jobs directly on the map while exploring.",
+                j3t: "Factions & Services", j3d: "Police, Fire, EMS. Steady salary and reputation."
             }
         };
 
