@@ -14,10 +14,9 @@
             --discord: #5865F2;
         }
 
-        /* --- GLOBALNE MOCOWANIE ROZMIARU --- */
         html, body {
             max-width: 100%;
-            overflow-x: hidden; /* Blokuje przesuwanie na boki */
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -45,8 +44,8 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- SELEKTOR JĘZYKA --- */
-        .lang-switch {
+        /* --- PASEK NAWIGACJI GÓRNEJ (JĘZYK + POWRÓT) --- */
+        .top-nav-wrap {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -54,12 +53,36 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .lang-switch, .back-to-top {
             background: rgba(0, 0, 0, 0.7);
             padding: 8px 15px;
             border-radius: 100px;
             border: 1px solid rgba(255, 180, 0, 0.2);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            color: var(--accent);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255, 180, 0, 0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .lang-btn {
@@ -147,7 +170,6 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* FIX DLA MOBILES: Zapobieganie rozszerzaniu przez długie wyrazy */
         p, h1, h2, h3 { overflow-wrap: break-word; word-wrap: break-word; }
     </style>
 </head>
@@ -156,10 +178,14 @@
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
 
-    <div class="lang-switch">
-        <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
-        <span style="color: #333;">|</span>
-        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    <div class="top-nav-wrap">
+        <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0)">↑</button>
+        
+        <div class="lang-switch">
+            <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
+            <span style="color: #333;">|</span>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
     </div>
 
     <header>
@@ -266,19 +292,37 @@
             document.getElementById('v5-t').innerText = l.v5t; document.getElementById('v5-d').innerText = l.v5d;
             document.getElementById('v6-t').innerText = l.v6t; document.getElementById('v6-d').innerText = l.v6d;
             document.getElementById('title-todo').innerText = l.tTodo;
-            document.getElementById('job1-t').innerText = l.j1t; document.getElementById('job1-d').innerText = l.j1d;
+            document.getElementById('job1-t').innerText = l.j1t; document.getElementById('job1-d').innerText = l.j1t;
             document.getElementById('job2-t').innerText = l.j2t; document.getElementById('job2-d').innerText = l.j2d;
             document.getElementById('title-discord').innerText = l.tD;
             document.getElementById('desc-discord').innerText = l.dD;
             document.getElementById('btn-discord').innerText = l.bD;
         }
 
+        // --- SKRYPT DLA PRZYCISKU POWROTU I KURSORA ---
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
+        const backBtn = document.getElementById('backToTop');
+
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
             outline.style.left = e.clientX + 'px'; outline.style.top = e.clientY + 'px';
             outline.style.transform = 'translate(-11px, -11px)';
+        });
+
+        window.addEventListener('scroll', () => {
+            // Pokaż strzałkę po przewinięciu 300px
+            if (window.scrollY > 300) {
+                backBtn.classList.add('visible');
+            } else {
+                backBtn.classList.remove('visible');
+            }
+            
+            // Animacja sekcji
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 80) el.classList.add('active');
+            });
         });
 
         document.querySelectorAll('a, button, .info-card').forEach(el => {
@@ -287,14 +331,12 @@
         });
 
         const reveals = document.querySelectorAll('.reveal');
-        function scrollReveal() {
-            reveals.forEach(el => {
+        window.addEventListener('load', () => {
+             reveals.forEach(el => {
                 const top = el.getBoundingClientRect().top;
                 if (top < window.innerHeight - 80) el.classList.add('active');
             });
-        }
-        window.addEventListener('scroll', scrollReveal);
-        window.addEventListener('load', scrollReveal);
+        });
     </script>
 </body>
 </html>
