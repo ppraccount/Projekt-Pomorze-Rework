@@ -14,7 +14,17 @@
             --discord: #5865F2;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        /* --- BLOKADA ZAZNACZANIA TEKSTU --- */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            scroll-behavior: smooth;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE/Edge */
+            user-select: none; /* Standard */
+            -webkit-tap-highlight-color: transparent; /* Usuwa błysk przy klikaniu na tel */
+        }
         
         @media (pointer: fine) {
             * { cursor: none; }
