@@ -14,189 +14,59 @@
             --discord: #5865F2;
         }
 
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-            position: relative;
-        }
+        html, body { max-width: 100%; overflow-x: hidden; position: relative; background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
 
-        /* --- BLOKADA ZAZNACZANIA TEKSTU --- */
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            scroll-behavior: smooth;
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        @media (pointer: fine) {
-            * { cursor: none; }
-        }
-
-        body { background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
+        @media (pointer: fine) { * { cursor: none; } }
 
         /* --- KURSOR --- */
         #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
         #cursor-outline { width: 30px; height: 30px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: all 0.15s ease-out; opacity: 0.5; }
 
-        @media (pointer: coarse) {
-            #cursor, #cursor-outline { display: none !important; }
-        }
+        @media (pointer: coarse) { #cursor, #cursor-outline { display: none !important; } }
 
-        /* --- SELEKTOR JĘZYKA (PRAWY GÓRNY RÓG) --- */
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 100px;
-            border: 1px solid rgba(255, 180, 0, 0.2);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lang-btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: #666;
-            transition: 0.3s;
-            font-weight: 700;
-            border: none;
-            background: none;
-            padding: 5px;
-        }
-
+        /* --- UI ELEMENTS --- */
+        .lang-switch { position: fixed; top: 20px; right: 20px; z-index: 1001; background: rgba(0, 0, 0, 0.7); padding: 8px 15px; border-radius: 100px; border: 1px solid rgba(255, 180, 0, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; align-items: center; gap: 10px; }
+        .lang-btn { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #666; transition: 0.3s; font-weight: 700; border: none; background: none; padding: 5px; }
         .lang-btn.active { color: var(--accent); }
 
-        /* --- NOWA STRZAŁKA POWROTU (ŚRODEK DÓŁ) --- */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            z-index: 1001;
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-decoration: none;
-        }
+        .back-to-top { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); z-index: 1001; width: 50px; height: 50px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .back-to-top svg { width: 20px; fill: none; stroke: currentColor; stroke-width: 3; }
 
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
+        /* --- TABS SYSTEM --- */
+        .tab-content { display: none; width: 100%; }
+        .tab-content.active { display: block; }
 
-        /* Ikona strzałki */
-        .back-to-top svg {
-            width: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* --- HERO BANER --- */
-        header { 
-            height: 100vh; 
-            width: 100%;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), 
-                        url('https://i.imgur.com/IfxxSeZ.png'); 
-            background-size: cover;
-            background-position: center;
-            padding: 0 20px;
-        }
-
-        .hero-title { 
-            font-family: 'Syne', sans-serif; 
-            font-size: clamp(2.5rem, 12vw, 9rem); 
-            line-height: 0.9; 
-            margin-bottom: 30px; 
-            text-transform: uppercase; 
-        }
+        /* --- HERO --- */
+        header { height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), url('https://i.imgur.com/IfxxSeZ.png'); background-size: cover; background-position: center; padding: 0 20px; }
+        .hero-title { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 12vw, 9rem); line-height: 0.9; margin-bottom: 30px; text-transform: uppercase; }
         .hero-title span { -webkit-text-stroke: 1px var(--accent); -webkit-text-fill-color: transparent; }
 
         .nav-categories { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; width: 100%; }
-        .cat-btn {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,180,0,0.3);
-            color: var(--accent);
-            padding: 12px 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
+        .cat-btn { background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); border: 1px solid rgba(255,180,0,0.3); color: var(--accent); padding: 12px 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: 0.3s; }
         .cat-btn:hover { background: var(--accent); color: #000; }
 
-        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 50px 20px; overflow: hidden; }
-
+        /* --- CONTENT --- */
+        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
         section { padding: 80px 0; border-top: 1px solid #1a1a1a; width: 100%; }
         .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 40px; color: var(--accent); text-transform: uppercase; }
-
-        .info-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-            width: 100%;
-        }
-
-        .info-card { background: var(--card); padding: 30px; border-radius: 4px; border: 1px solid #1f1f1f; width: 100%; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .info-card { background: var(--card); padding: 30px; border-radius: 4px; border: 1px solid #1f1f1f; }
         .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.4rem; }
-        .info-card p { color: #888; line-height: 1.5; font-size: 0.95rem; }
+        .info-card p { color: #888; line-height: 1.5; }
 
-        .soon-box {
-            background: rgba(255, 180, 0, 0.05);
-            border: 1px dashed var(--accent);
-            padding: 60px;
-            text-align: center;
-            border-radius: 4px;
-        }
-        .soon-text { font-family: 'JetBrains Mono', monospace; font-size: 2rem; color: var(--accent); letter-spacing: 5px; }
+        .soon-box { background: rgba(255, 180, 0, 0.05); border: 1px dashed var(--accent); padding: 100px 20px; text-align: center; border-radius: 4px; margin-top: 50px; }
+        .soon-text { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.5rem, 5vw, 2.5rem); color: var(--accent); letter-spacing: 10px; }
 
         .discord-area { text-align: center; padding: 100px 20px; }
-        .discord-link {
-            display: inline-block;
-            background: var(--discord);
-            color: white;
-            padding: 18px 40px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; }
+        .discord-link { display: inline-block; background: var(--discord); color: white; padding: 18px 40px; border-radius: 5px; text-decoration: none; font-weight: 700; }
+        
+        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; border-top: 1px solid #1a1a1a; }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
-        p, h1, h2, h3 { overflow-wrap: break-word; word-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -210,66 +80,67 @@
         <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
 
-    <a href="javascript:window.scrollTo(0,0)" class="back-to-top" id="backToTop">
-        <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    <a href="javascript:void(0)" onclick="window.scrollTo(0,0)" class="back-to-top" id="backToTop">
+        <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
 
     <header>
         <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
         <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
-        
         <div class="nav-categories reveal">
-            <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
-            <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
-            <a href="#cars" class="cat-btn" id="nav-cars">Pojazdy</a>
-            <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
+            <a href="javascript:void(0)" onclick="showTab('home')" class="cat-btn" id="nav-home">Strona Główna</a>
+            <a href="javascript:void(0)" onclick="showTab('cars')" class="cat-btn" id="nav-cars">Pojazdy</a>
+            <a href="#discord" onclick="showTab('home')" class="cat-btn" id="nav-discord">Społeczność</a>
         </div>
     </header>
 
-    <div class="container">
-        
-        <section id="o-grze" class="reveal">
-            <h2 class="section-title" id="title-about">O projekcie</h2>
-            <p id="desc-about" style="font-size: 1.2rem; color: #bbb; max-width: 800px;">
-                Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.
-            </p>
-        </section>
+    <div id="home-tab" class="tab-content active">
+        <div class="container">
+            <section id="o-grze" class="reveal">
+                <h2 class="section-title" id="title-about">O projekcie</h2>
+                <p id="desc-about" style="font-size: 1.2rem; color: #bbb; max-width: 800px;">
+                    Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.
+                </p>
+            </section>
 
-        <section id="tereny" class="reveal">
-            <h2 class="section-title" id="title-regions">Twoja okolica</h2>
-            <div class="info-grid">
-                <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.</p></div>
-                <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
-                <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś, gdzie masz dużo ukrytych easter eggów. Była to pierwsza miejscowość wykonana w nowej odsłonie projektu!</p></div>
-                <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!</p></div>
-                <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.</p></div>
-                <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Pewnie wam kojarzy się z jednym... Ale ogólnie jest to wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywy teren to właśnie tu!</p></div>
-            </div>
-        </section>
+            <section id="tereny" class="reveal">
+                <h2 class="section-title" id="title-regions">Twoja okolica</h2>
+                <div class="info-grid">
+                    <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.</p></div>
+                    <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
+                    <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś, gdzie masz dużo ukrytych easter eggów. Była to pierwsza miejscowość wykonana w nowej odsłonie projektu!</p></div>
+                    <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!</p></div>
+                    <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.</p></div>
+                    <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Pewnie wam kojarzy się z jednym... Ale ogólnie jest to wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywy teren to właśnie tu!</p></div>
+                </div>
+            </section>
 
-        <section id="cars" class="reveal">
-            <h2 class="section-title" id="title-cars">Pojazdy</h2>
-            <div class="soon-box">
-                <div class="soon-text" id="text-soon">WKRÓTCE</div>
-            </div>
-        </section>
-
-        <section id="discord" class="discord-area reveal">
-            <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
-            <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
-            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
-        </section>
-
+            <section id="discord" class="discord-area reveal">
+                <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
+                <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
+                <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
+            </section>
+        </div>
     </div>
 
-    <footer>
-        PROJEKT POMORZE: REWORK // 2026
-    </footer>
+    <div id="cars-tab" class="tab-content">
+        <div class="container">
+            <section style="border:none;">
+                <h2 class="section-title" id="title-cars">Pojazdy</h2>
+                <p style="color: #888;">Lista dostępnych maszyn w Projekt Pomorze Rework.</p>
+                <div class="soon-box">
+                    <div class="soon-text" id="text-soon">WKRÓTCE</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>PROJEKT POMORZE: REWORK // 2026</footer>
 
     <script>
         const translations = {
             pl: {
-                navA: "O grze", navR: "Regiony", navC: "Pojazdy", navD: "Społeczność",
+                navH: "Strona Główna", navC: "Pojazdy", navD: "Społeczność",
                 tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
                 tR: "Twoja okolica",
                 v1t: "Rychnowy", v1d: "To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.",
@@ -282,7 +153,7 @@
                 tD: "Bądź na bieżąco", dD: "Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.", bD: "DOŁĄCZ DO NAS"
             },
             en: {
-                navA: "About", navR: "Regions", navC: "Cars", navD: "Community",
+                navH: "Home", navC: "Cars", navD: "Community",
                 tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk.",
                 tR: "Your Neighborhood",
                 v1t: "Rychnowy", v1d: "This is where you first see our project. Located by national road DK22.",
@@ -296,13 +167,20 @@
             }
         };
 
+        function showTab(tabName) {
+            document.getElementById('home-tab').classList.remove('active');
+            document.getElementById('cars-tab').classList.remove('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+            window.scrollTo(0,0);
+            setTimeout(scrollReveal, 100);
+        }
+
         function setLang(lang) {
             document.getElementById('btn-pl').classList.remove('active');
             document.getElementById('btn-en').classList.remove('active');
             document.getElementById('btn-' + lang).classList.add('active');
             const l = translations[lang];
-            document.getElementById('nav-about').innerText = l.navA;
-            document.getElementById('nav-regions').innerText = l.navR;
+            document.getElementById('nav-home').innerText = l.navH;
             document.getElementById('nav-cars').innerText = l.navC;
             document.getElementById('nav-discord').innerText = l.navD;
             document.getElementById('title-about').innerText = l.tA;
@@ -329,34 +207,26 @@
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
             outline.style.left = e.clientX + 'px'; outline.style.top = e.clientY + 'px';
-            outline.style.transform = 'translate(-11px, -11px)';
         });
 
-        window.addEventListener('scroll', () => {
-            // Logika pokazywania strzałki
-            if (window.scrollY > 300) {
-                backBtn.classList.add('visible');
-            } else {
-                backBtn.classList.remove('visible');
-            }
+        window.addEventListener('scroll', scrollReveal);
+
+        function scrollReveal() {
+            if (window.scrollY > 300) backBtn.classList.add('visible');
+            else backBtn.classList.remove('visible');
             
             reveals.forEach(el => {
                 const top = el.getBoundingClientRect().top;
                 if (top < window.innerHeight - 80) el.classList.add('active');
             });
-        });
+        }
 
         document.querySelectorAll('a, button, .info-card').forEach(el => {
             el.addEventListener('mouseenter', () => { if(cursor) cursor.style.transform = 'scale(5)'; if(outline) outline.style.opacity = '0'; });
             el.addEventListener('mouseleave', () => { if(cursor) cursor.style.transform = 'scale(1)'; if(outline) outline.style.opacity = '0.5'; });
         });
 
-        window.addEventListener('load', () => {
-             reveals.forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 80) el.classList.add('active');
-            });
-        });
+        window.onload = scrollReveal;
     </script>
 </body>
 </html>
