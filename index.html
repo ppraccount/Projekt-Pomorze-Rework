@@ -16,21 +16,46 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
-        /* UKRYWANIE KURSORA SYSTEMOWEGO TYLKO NA KOMPUTERACH */
         @media (pointer: fine) {
             * { cursor: none; }
         }
 
         body { background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
 
-        /* --- TWOJA KLASYKA: KURSOR --- */
+        /* --- KURSOR --- */
         #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
         #cursor-outline { width: 30px; height: 30px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: all 0.15s ease-out; opacity: 0.5; }
 
-        /* UKRYWANIE TWOJEGO KURSORA NA TELEFONACH */
         @media (pointer: coarse) {
             #cursor, #cursor-outline { display: none !important; }
         }
+
+        /* --- SELEKTOR JĘZYKA --- */
+        .lang-switch {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 15px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 180, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #666;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 700;
+        }
+
+        .lang-btn.active { color: var(--accent); }
+        .lang-btn:hover { color: #fff; }
 
         /* --- HERO BANER --- */
         header { 
@@ -102,6 +127,12 @@
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
 
+    <div class="lang-switch">
+        <a href="#" class="lang-btn active">PL</a>
+        <span style="color: #333;">|</span>
+        <a href="#" class="lang-btn">EN</a>
+    </div>
+
     <header>
         <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
         <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
@@ -119,34 +150,58 @@
         <section id="o-grze" class="reveal">
             <h2 class="section-title">O projekcie</h2>
             <p style="font-size: 1.4rem; color: #bbb; max-width: 800px;">
-                Projekt Pomorze to autentyczna podróż przez powiat człuchowski. Rework to nie tylko nowa oprawa – to głęboki klimat polskiej drogi, który budujemy od podstaw dla prawdziwych pasjonatów.
+                Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.
             </p>
         </section>
 
         <section id="tereny" class="reveal">
-            <h2 class="section-title">Regiony</h2>
+            <h2 class="section-title">Twoja okolica</h2>
             <div class="info-grid">
-                <div class="info-card"><h3>Rychnowy</h3><p>Centrum wszystkiego. Główne skrzyżowanie, stacja i punkt spotkań kierowców.</p></div>
-                <div class="info-card"><h3>Krery</h3><p>Rolnicze serce powiatu. Wąski asfalt, silosy i swojski klimat.</p></div>
-                <div class="info-card"><h3>Kiełpin</h3><p>Gęste lasy i ucieczka od zgiełku. Region dla tych, którzy cenią naturę.</p></div>
-                <div class="info-card"><h3>Zielątkowo</h3><p>Przemysłowa siła. Baza dla ciężkich transportów i lokalnego biznesu.</p></div>
-                <div class="info-card"><h3>Czarnoszki</h3><p>Zapomniana, ceglana osada z duszą i niesamowitym vibe'em.</p></div>
-                <div class="info-card"><h3>Krzyżanki</h3><p>Klimatyczna wieś pełna drobnych detali, które tworzą całość mapy.</p></div>
+                <div class="info-card">
+                    <h3>Rychnowy</h3>
+                    <p>Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Krery</h3>
+                    <p>Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!</p>
+                </div>
+                <div class="info-card">
+                    <h3>Kiełpin</h3>
+                    <p>Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Zielątkowo</h3>
+                    <p>Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Czarnoszki</h3>
+                    <p>Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Krzyżanki</h3>
+                    <p>Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.</p>
+                </div>
             </div>
         </section>
 
         <section id="co-robic" class="reveal">
-            <h2 class="section-title">Twoja Rola</h2>
+            <h2 class="section-title">Co u nas znajdziesz?</h2>
             <div class="info-grid">
-                <div class="info-card"><h3>Kurier</h3><p>Obsługuj lokalne zlecenia i dowoź przesyłki pod same drzwi mieszkańców.</p></div>
-                <div class="info-card"><h3>Eksploracja</h3><p>Odkrywaj ukryte polne drogi i ciesz się unikalnymi widokami Pomorza.</p></div>
+                <div class="info-card">
+                    <h3>Praca Kuriera</h3>
+                    <p>Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Wolna Jazda</h3>
+                    <p>Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.</p>
+                </div>
             </div>
         </section>
 
         <section id="discord" class="discord-area reveal">
-            <h2 class="section-title">Dołącz do nas</h2>
-            <p style="margin-bottom: 40px; color: #888;">Śledź rozwój projektu i bądź częścią naszej społeczności.</p>
-            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank">WEJDŹ NA DISCORD</a>
+            <h2 class="section-title">Bądź na bieżąco</h2>
+            <p style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
+            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank">DOŁĄCZ DO NAS</a>
         </section>
 
     </div>
