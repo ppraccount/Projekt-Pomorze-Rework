@@ -22,7 +22,7 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* --- BLOKADA ZAZNACZANIA --- */
+        /* --- BLOKADY --- */
         * { 
             margin: 0; 
             padding: 0; 
@@ -73,19 +73,11 @@
         }
         .tab-btn.active, .lang-btn.active { color: var(--accent); }
 
-        /* --- CONTENT WRAPPER & ANIMATION --- */
-        .tab-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+        /* --- TAB SYSTEM --- */
+        .tab-content { display: none; opacity: 0; transition: opacity 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; }
 
-        .tab-content.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* --- BACK TO TOP (ŚRODEK) --- */
+        /* --- UI --- */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -103,11 +95,10 @@
             color: var(--accent);
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-        /* --- SECTIONS --- */
         header { 
             height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), url('https://i.imgur.com/IfxxSeZ.png'); 
@@ -120,9 +111,9 @@
         section { padding: 80px 0; border-top: 1px solid #1a1a1a; }
         .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 40px; color: var(--accent); text-transform: uppercase; }
 
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .info-card { background: var(--card); padding: 30px; border-radius: 4px; border: 1px solid #1f1f1f; transition: 0.3s; }
-        .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.4rem; }
+        .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.4rem; color: #fff; }
         .info-card p { color: #888; line-height: 1.5; font-size: 0.95rem; }
 
         .soon-box { border: 1px dashed var(--accent); padding: 100px 20px; text-align: center; border-radius: 4px; margin-top: 50px; background: rgba(255, 180, 0, 0.02); }
@@ -130,26 +121,18 @@
 
         .discord-area { text-align: center; padding: 100px 20px; }
         .discord-link { display: inline-block; background: var(--discord); color: white; padding: 18px 40px; border-radius: 5px; text-decoration: none; font-weight: 700; transition: 0.3s; }
-        .discord-link:hover { transform: scale(1.05); filter: brightness(1.1); }
+        .discord-link:hover { transform: scale(1.05); }
 
         footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; border-top: 1px solid #1a1a1a; }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .nav-categories { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; width: 100%; }
+        .nav-categories { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; }
         .cat-btn {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,180,0,0.3);
-            color: var(--accent);
-            padding: 12px 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 2px;
-            transition: 0.3s;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); border: 1px solid rgba(255,180,0,0.3);
+            color: var(--accent); padding: 12px 20px; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: 0.3s;
         }
         .cat-btn:hover { background: var(--accent); color: #000; }
     </style>
@@ -183,10 +166,10 @@
         <header>
             <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
             <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
-            
             <div class="nav-categories reveal">
                 <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
                 <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
+                <a href="#praca" class="cat-btn" id="nav-jobs">Zarobki</a>
                 <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
             </div>
         </header>
@@ -202,18 +185,36 @@
             <section id="tereny" class="reveal">
                 <h2 class="section-title" id="title-regions">Twoja okolica</h2>
                 <div class="info-grid">
-                    <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.</p></div>
-                    <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
-                    <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś, gdzie masz dużo ukrytych easter eggów. Była to pierwsza miejscowość wykonana w nowej odsłonie projektu!</p></div>
-                    <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!</p></div>
-                    <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.</p></div>
-                    <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywizny.</p></div>
+                    <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">Miejscowość przy drodze krajowej DK22. Pierwszy punkt styku z naszym światem.</p></div>
+                    <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, strategicznie położona.</p></div>
+                    <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Pierwsza miejscowość reworku. Dużo ukrytych smaczków.</p></div>
+                    <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś na zachodzie, pełna tajemnic.</p></div>
+                    <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Przemysłowe serce mapy: żwirownia, urbex i zakłady.</p></div>
+                    <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Drewniana zabudowa, jeziora i unikalne krzywizny terenu.</p></div>
+                </div>
+            </section>
+
+            <section id="praca" class="reveal">
+                <h2 class="section-title" id="title-jobs">Praca i Zarobki</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3 id="j1-t">Prace dorywcze</h3>
+                        <p id="j1-d">Od koszenia trawników po zbieranie jabłek u sąsiada. Idealne na start, by zarobić na pierwszy samochód.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 id="j2-t">Frakcje</h3>
+                        <p id="j2-d">Dołącz do Policji, Straży Pożarnej lub Pogotowia. Stabilna pensja i odpowiedzialność za region.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 id="j3-t">Ciemna Strona</h3>
+                        <p id="j3-d">Napady na sklepy, handel nielegalnym towarem. Szybka kasa, ale wielkie ryzyko.</p>
+                    </div>
                 </div>
             </section>
 
             <section id="discord" class="discord-area reveal">
                 <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
-                <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
+                <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Dołącz do tysięcy graczy i śledź postępy prac.</p>
                 <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
             </section>
         </div>
@@ -221,8 +222,8 @@
 
     <div id="cars-content" class="tab-content">
         <div class="container" style="padding-top: 150px;">
-            <h2 class="section-title" id="title-cars">Nasze Maszyny</h2>
-            <p style="color: #888; margin-bottom: 30px;">Pracujemy nad wdrożeniem unikalnych pojazdów, które idealnie wpasują się w pomorski klimat.</p>
+            <h2 class="section-title" id="title-cars">Pojazdy</h2>
+            <p style="color: #888; margin-bottom: 40px;">Lista unikalnych maszyn przygotowanych specjalnie dla Reworku.</p>
             <div class="soon-box">
                 <div class="soon-text" id="text-soon">WKRÓTCE</div>
             </div>
@@ -235,17 +236,21 @@
         const translations = {
             pl: {
                 tabH: "Home", tabV: "Pojazdy",
-                navA: "O grze", navR: "Regiony", navD: "Społeczność",
-                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór...",
-                tR: "Twoja okolica", tCars: "Nasze Maszyny", tSoon: "WKRÓTCE",
-                tD: "Bądź na bieżąco", bD: "DOŁĄCZ DO NAS"
+                navA: "O grze", navR: "Regiony", navJ: "Zarobki", navD: "Społeczność",
+                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór.",
+                tR: "Twoja okolica", tJobs: "Praca i Zarobki", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
+                j1t: "Prace dorywcze", j1d: "Od koszenia trawników po zbieranie jabłek. Idealne na start.",
+                j2t: "Frakcje", j2d: "Policja, Straż, Pogotowie. Służba i stabilna kasa.",
+                j3t: "Ciemna Strona", j3d: "Napady i ryzyko. Szybki zysk dla odważnych."
             },
             en: {
                 tabH: "Home", tabV: "Vehicles",
-                navA: "About", navR: "Regions", navD: "Community",
-                tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk...",
-                tR: "Your Neighborhood", tCars: "Our Vehicles", tSoon: "COMING SOON",
-                tD: "Stay Updated", bD: "JOIN US"
+                navA: "About", navR: "Regions", navJ: "Jobs", navD: "Community",
+                tA: "The Project", dA: "Project Pomorze is more than just a map. Experience the unique atmosphere of Pomerania.",
+                tR: "Your Neighborhood", tJobs: "Work & Economy", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
+                j1t: "Odd Jobs", j1d: "From mowing lawns to apple picking. Best for starters.",
+                j2t: "Factions", j2d: "Police, Fire, EMS. Service with a steady salary.",
+                j3t: "Dark Side", j3d: "Robberies and risks. Fast cash for the brave."
             }
         };
 
@@ -257,13 +262,17 @@
             document.getElementById('tab-cars-btn').innerText = l.tabV;
             document.getElementById('nav-about').innerText = l.navA;
             document.getElementById('nav-regions').innerText = l.navR;
+            document.getElementById('nav-jobs').innerText = l.navJ;
             document.getElementById('nav-discord').innerText = l.navD;
             document.getElementById('title-about').innerText = l.tA;
             document.getElementById('title-regions').innerText = l.tR;
+            document.getElementById('title-jobs').innerText = l.tJobs;
             document.getElementById('title-cars').innerText = l.tCars;
             document.getElementById('text-soon').innerText = l.tSoon;
-            document.getElementById('title-discord').innerText = l.tD;
             document.getElementById('btn-discord').innerText = l.bD;
+            document.getElementById('j1-t').innerText = l.j1t; document.getElementById('j1-d').innerText = l.j1d;
+            document.getElementById('j2-t').innerText = l.j2t; document.getElementById('j2-d').innerText = l.j2d;
+            document.getElementById('j3-t').innerText = l.j3t; document.getElementById('j3-d').innerText = l.j3d;
         }
 
         function openTab(tabName) {
