@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projekt Pomorze: Rework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syne:wght@700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --accent: #ffb400; 
+            --card: #161616;
+            --text: #ffffff;
+            --discord: #5865F2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; scroll-behavior: smooth; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+
+        /* --- TWOJA KLASYKA: KURSOR --- */
+        #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
+        #cursor-outline { width: 30px; height: 30px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: all 0.15s ease-out; opacity: 0.5; }
+
+        /* --- HERO BANER --- */
+        header { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), 
+                        url('https://i.imgur.com/IfxxSeZ.png'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-title { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 15vw, 9rem); line-height: 0.8; margin-bottom: 30px; text-transform: uppercase; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .hero-title span { -webkit-text-stroke: 1px var(--accent); -webkit-text-fill-color: transparent; }
+
+        .nav-categories { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; }
+        .cat-btn {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,180,0,0.3);
+            color: var(--accent);
+            padding: 15px 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        .cat-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); transform: translateY(-3px); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
+
+        section { padding: 100px 0; border-top: 1px solid #1a1a1a; }
+        .section-title { font-family: 'Syne', sans-serif; font-size: 3rem; margin-bottom: 40px; color: var(--accent); text-transform: uppercase; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .info-card { background: var(--card); padding: 40px; border-radius: 4px; transition: 0.3s; border: 1px solid #1f1f1f; }
+        .info-card:hover { transform: translateY(-5px); border-color: var(--accent); background: #1a1a1a; }
+        .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.5rem; }
+        .info-card p { color: #888; line-height: 1.4; }
+
+        .discord-area { text-align: center; padding: 100px 0; }
+        .discord-link {
+            display: inline-block;
+            background: var(--discord);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        .discord-link:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(88,101,242,0.4); }
+
+        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.8rem; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-outline"></div>
+
+    <header>
+        <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
+        <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
+        
+        <div class="nav-categories reveal">
+            <a href="#o-grze" class="cat-btn">O grze</a>
+            <a href="#tereny" class="cat-btn">Regiony</a>
+            <a href="#co-robic" class="cat-btn">Co robić?</a>
+            <a href="#discord" class="cat-btn">Społeczność</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section id="o-grze" class="reveal">
+            <h2 class="section-title">O projekcie</h2>
+            <p style="font-size: 1.4rem; color: #bbb; max-width: 800px;">
+                Projekt Pomorze to autentyczna podróż przez powiat człuchowski. Rework to nie tylko nowa oprawa – to głęboki klimat polskiej drogi, który budujemy od podstaw dla prawdziwych pasjonatów.
+            </p>
+        </section>
+
+        <section id="tereny" class="reveal">
+            <h2 class="section-title">Regiony</h2>
+            <div class="info-grid">
+                <div class="info-card"><h3>Rychnowy</h3><p>Centrum wszystkiego. Główne skrzyżowanie, stacja i punkt spotkań kierowców.</p></div>
+                <div class="info-card"><h3>Krery</h3><p>Rolnicze serce powiatu. Wąski asfalt, silosy i swojski klimat.</p></div>
+                <div class="info-card"><h3>Kiełpin</h3><p>Gęste lasy i ucieczka od zgiełku. Region dla tych, którzy cenią naturę.</p></div>
+                <div class="info-card"><h3>Zielątkowo</h3><p>Przemysłowa siła. Baza dla ciężkich transportów i lokalnego biznesu.</p></div>
+                <div class="info-card"><h3>Czarnoszki</h3><p>Zapomniana, ceglana osada z duszą i niesamowitym vibe'em.</p></div>
+                <div class="info-card"><h3>Krzyżanki</h3><p>Klimatyczna wieś pełna drobnych detali, które tworzą całość mapy.</p></div>
+            </div>
+        </section>
+
+        <section id="co-robic" class="reveal">
+            <h2 class="section-title">Twoja Rola</h2>
+            <div class="info-grid">
+                <div class="info-card"><h3>Kurier</h3><p>Obsługuj lokalne zlecenia i dowoź przesyłki pod same drzwi mieszkańców.</p></div>
+                <div class="info-card"><h3>Eksploracja</h3><p>Odkrywaj ukryte polne drogi i ciesz się unikalnymi widokami Pomorza.</p></div>
+            </div>
+        </section>
+
+        <section id="discord" class="discord-area reveal">
+            <h2 class="section-title">Dołącz do nas</h2>
+            <p style="margin-bottom: 40px; color: #888;">Śledź rozwój projektu i bądź częścią naszej społeczności.</p>
+            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank">WEJDŹ NA DISCORD</a>
+        </section>
+
+    </div>
+
+    <footer>
+        PROJEKT POMORZE: REWORK // 2026
+    </footer>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const outline = document.getElementById('cursor-outline');
+
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            outline.style.left = e.clientX + 'px';
+            outline.style.top = e.clientY + 'px';
+            outline.style.transform = 'translate(-11px, -11px)';
+        });
+
+        document.querySelectorAll('a, .info-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(5)';
+                outline.style.opacity = '0';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                outline.style.opacity = '0.5';
+            });
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        function scrollReveal() {
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 80) el.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', scrollReveal);
+        window.addEventListener('load', scrollReveal);
+    </script>
+</body>
+</html>
