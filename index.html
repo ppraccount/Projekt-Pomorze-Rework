@@ -20,10 +20,10 @@
             padding: 0; 
             box-sizing: border-box; 
             scroll-behavior: smooth;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE/Edge */
-            user-select: none; /* Standard */
-            -webkit-tap-highlight-color: transparent; /* Usuwa błysk przy klikaniu na tel */
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         
         @media (pointer: fine) {
@@ -40,19 +40,21 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- SELEKTOR JĘZYKA --- */
+        /* --- NAPRAWIONY SELEKTOR JĘZYKA --- */
         .lang-switch {
             position: fixed;
             top: 30px;
             right: 40px;
             z-index: 1001;
             display: flex;
+            align-items: center;
             gap: 10px;
             background: rgba(255, 255, 255, 0.05);
             padding: 8px 15px;
             border-radius: 100px;
             border: 1px solid rgba(255, 180, 0, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Wsparcie dla Safari */
         }
 
         .lang-btn {
@@ -64,6 +66,8 @@
             font-weight: 700;
             border: none;
             background: none;
+            padding: 5px;
+            display: inline-block;
         }
 
         .lang-btn.active { color: var(--accent); }
@@ -140,9 +144,9 @@
     <div id="cursor-outline"></div>
 
     <div class="lang-switch">
-        <button class="lang-btn active" onclick="setLang('pl')">PL</button>
+        <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
         <span style="color: #333;">|</span>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
 
     <header>
@@ -169,12 +173,12 @@
         <section id="tereny" class="reveal">
             <h2 class="section-title" id="title-regions">Twoja okolica</h2>
             <div class="info-grid">
-                <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.</p></div>
-                <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!</p></div>
-                <div class="info-card"><h3 id="v3-t">Kiełpin</h3><p id="v3-d">Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.</p></div>
-                <div class="info-card"><h3 id="v4-t">Zielątkowo</h3><p id="v4-d">Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.</p></div>
-                <div class="info-card"><h3 id="v5-t">Czarnoszki</h3><p id="v5-d">Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.</p></div>
-                <div class="info-card"><h3 id="v6-t">Krzyżanki</h3><p id="v6-d">Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.</p></div>
+                <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość położona przy drodze krajowej DK22.</p></div>
+                <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
+                <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś z mnóstwem ukrytych easter eggów. To pierwsza miejscowość wykonana w nowej odsłonie projektu!</p></div>
+                <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś skrywająca wiele tajemnic. To aktualnie najdalej wysunięta na zachód miejscowość w grze!</p></div>
+                <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Miejsce dla fanów urbexu. Znajdziesz tu również żwirownię oraz zakłady przemysłowe.</p></div>
+                <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Wieś, w której prawie wszystkie domki są drewniane. Czeka tu na Ciebie urozmaicony, krzywy teren oraz jeziora.</p></div>
             </div>
         </section>
 
@@ -204,26 +208,26 @@
                 navA: "O grze", navR: "Regiony", navT: "Co robić?", navD: "Społeczność",
                 tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
                 tR: "Twoja okolica",
-                v1t: "Rychnowy", v1d: "Miejsce, gdzie zawsze coś się dzieje. Możesz zatankować, pogadać z innymi na stacji albo po prostu postać w korku na głównym skrzyżowaniu.",
-                v2t: "Krery", v2d: "Typowa polska wieś. Ciasne skręty między płotami i wielkie silosy, które widać z daleka. Tutaj trzeba uważać na pobocza!",
-                v3t: "Kiełpin", v3d: "Spokojna miejscowość otoczona gęstym lasem. Najlepszy wybór, jeśli chcesz na chwilę uciec od hałasu miasta i cieszyć się widokami.",
-                v4t: "Zielątkowo", v4d: "Region dla tych, co lubią konkrety. Magazyny, firmy i dużo betonu. To tutaj bije serce lokalnego biznesu i przemysłu.",
-                v5t: "Czarnoszki", v5d: "Wieś z klimatem starej cegły. Ma w sobie coś tajemniczego i surowego, czego nie znajdziesz w żadnym innym miejscu na mapie.",
-                v6t: "Krzyżanki", v6d: "Mała osada, w której liczy się każdy detal. Idealna, żeby zwolnić i zobaczyć, jak dopracowaliśmy każdy płot i kapliczkę.",
+                v1t: "Rychnowy", v1d: "To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość położona przy drodze krajowej DK22.",
+                v2t: "Krery", v2d: "Najmniejsza wieś, z której wszędzie dojedziesz.",
+                v3t: "Krzyżanki", v3d: "Większa wieś z mnóstwem ukrytych easter eggów. To pierwsza miejscowość wykonana w nowej odsłonie projektu!",
+                v4t: "Kiełpin", v4d: "Największa wieś skrywająca wiele tajemnic. To aktualnie najdalej wysunięta na zachód miejscowość w grze!",
+                v5t: "Zagórki", v5d: "Miejsce dla fanów urbexu. Znajdziesz tu również żwirownię oraz zakłady przemysłowe.",
+                v6t: "Czarnoszki", v6d: "Wieś, w której prawie wszystkie domki są drewniane. Czeka tu na Ciebie urozmaicony, krzywy teren oraz jeziora.",
                 tTodo: "Co u nas znajdziesz?", j1t: "Praca Kuriera", j1d: "Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.",
                 j2t: "Wolna Jazda", j2d: "Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.",
                 tD: "Bądź na bieżąco", dD: "Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.", bD: "DOŁĄCZ DO NAS"
             },
             en: {
                 navA: "About", navR: "Regions", navT: "Activities", navD: "Community",
-                tA: "The Project", dA: "Project Pomorze is more than just a map. It's a vibe you feel when driving on worn-out asphalt at dusk. We're building a world where every road, house, and tree has its place.",
+                tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk. We create a world where every road and tree matters.",
                 tR: "Your Neighborhood",
-                v1t: "Rychnowy", v1d: "The place where everything happens. Refuel, chat with others at the gas station, or just sit in traffic at the main intersection.",
-                v2t: "Krery", v2d: "A typical Polish village. Tight turns between fences and massive grain silos visible from afar. Watch those shoulders!",
-                v3t: "Kiełpin", v3d: "A peaceful town surrounded by dense forest. The best choice if you want to escape the city noise and enjoy the views.",
-                v4t: "Zielątkowo", v4d: "A region for those who like business. Warehouses, companies, and lots of concrete. The heart of local industry.",
-                v5t: "Czarnoszki", v5d: "A village with a brick-vibe. It has something mysterious and raw that you won't find anywhere else on the map.",
-                v6t: "Krzyżanki", v6d: "A small settlement where every detail matters. Perfect for slowing down and seeing every fence and shrine we've crafted.",
+                v1t: "Rychnowy", v1d: "This is where you first see our project. A town located by the national road DK22.",
+                v2t: "Krery", v2d: "The smallest village, from which you can reach anywhere.",
+                v3t: "Krzyżanki", v3d: "A larger village full of hidden easter eggs. The first town created for the new version of the project!",
+                v4t: "Kiełpin", v4d: "The largest village, full of secrets. Currently the westernmost point in the game!",
+                v5t: "Zagórki", v5d: "A place for urbex fans. You will also find a gravel pit and industrial plants here.",
+                v6t: "Czarnoszki", v6d: "A village where almost all houses are wooden. Expect varied, uneven terrain and beautiful lakes.",
                 tTodo: "What's inside?", j1t: "Courier Job", j1d: "Load the packages and hit the road. Door to door – discover every corner of the map while earning cash.",
                 j2t: "Free Drive", j2d: "Don't like jobs? No problem. Grab a car, turn on the radio, and just drive through the county at your own pace.",
                 tD: "Stay Updated", dD: "Latest screenshots, test dates, and discussions – it all happens on our Discord.", bD: "JOIN US"
@@ -231,8 +235,10 @@
         };
 
         function setLang(lang) {
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            document.getElementById('btn-pl').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+            
             const l = translations[lang];
             document.getElementById('nav-about').innerText = l.navA;
             document.getElementById('nav-regions').innerText = l.navR;
