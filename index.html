@@ -35,7 +35,6 @@
             * { cursor: none; }
         }
 
-        /* --- KURSOR --- */
         #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
         #cursor-outline { width: 30px; height: 30px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: all 0.15s ease-out; opacity: 0.5; }
 
@@ -43,7 +42,6 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- TOP NAV --- */
         .top-nav-left { position: fixed; top: 20px; left: 20px; z-index: 1001; }
         .top-nav-right { position: fixed; top: 20px; right: 20px; z-index: 1001; }
 
@@ -72,7 +70,6 @@
         }
         .tab-btn.active, .lang-btn.active { color: var(--accent); }
 
-        /* --- TAB SYSTEM --- */
         .tab-content { display: none; opacity: 0; transition: opacity 0.4s ease; }
         .tab-content.active { display: block; opacity: 1; }
 
@@ -115,7 +112,7 @@
         .discord-area { text-align: center; padding: 100px 20px; }
         .discord-link { display: inline-block; background: var(--discord); color: white; padding: 18px 40px; border-radius: 5px; text-decoration: none; font-weight: 700; transition: 0.3s; }
 
-        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; border-top: 1px solid #1a1a1a; }
+        footer { padding: 50px; text-align: center; color: #444; font-family: 'JetBrains Mono'; font-size: 0.75rem; border-top: 1px solid #1a1a1a; letter-spacing: 1px; }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -202,6 +199,7 @@
 
             <section id="discord" class="discord-area reveal">
                 <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
+                <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Dołącz do tysięcy graczy i śledź postępy prac na naszym serwerze.</p>
                 <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
             </section>
         </div>
@@ -216,7 +214,7 @@
         </div>
     </div>
 
-    <footer>PROJEKT POMORZE: REWORK // 2026</footer>
+    <footer>&copy; 2026 PROJEKT POMORZE: REWORK. ALL RIGHTS RESERVED.</footer>
 
     <script>
         const translations = {
@@ -224,7 +222,7 @@
                 tabH: "Home", tabV: "Pojazdy",
                 navA: "O grze", navR: "Regiony", navJ: "Aktywności", navD: "Społeczność",
                 tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
-                tR: "Twoja okolica", tJobs: "Co można robić?", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
+                tR: "Twoja okolica", tJobs: "Co można robić?", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS", dDisc: "Dołącz do setki graczy i śledź postępy prac na naszym serwerze.",
                 v1t: "Rychnowy", v1d: "To tutaj pierwszy raz widzisz nasz projekt na oczy, miejscowość przy jednej z dróg krajowych w kraju, przy DK22.",
                 v2t: "Krery", v2d: "Najmniejsza wieś z której wszędzie dojedziesz",
                 v3t: "Krzyżanki", v3d: "Wieksza wieś gdzie masz dużo ukrytych easter eggów, była to pierwsza miejscowość wykonana w nowej odsłonie projektu!",
@@ -237,15 +235,15 @@
             en: {
                 tabH: "Home", tabV: "Vehicles",
                 navA: "About", navR: "Regions", navJ: "Activities", navD: "Community",
-                tA: "The Project", dA: "Project Pomorze is more than just a map. Experience the atmosphere as you drive on the worn-out asphalt at dusk.",
-                tR: "Your Neighborhood", tJobs: "What to do?", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
+                tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk.",
+                tR: "Your Neighborhood", tJobs: "What to do?", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US", dDisc: "Join hunderds of players and follow the development progress on our server.",
                 v1t: "Rychnowy", v1d: "This is where you first see our project, a town by the national road DK22.",
                 v2t: "Krery", v2d: "The smallest village from which you can reach everywhere.",
                 v3t: "Krzyżanki", v3d: "A larger village with many hidden easter eggs, the first one made in the new version!",
                 v4t: "Kiełpin", v4d: "The largest village full of secrets, currently the westernmost point in the game!",
                 v5t: "Zagórki", v5d: "Here you'll find urbex, a gravel pit, and industrial plants.",
                 v6t: "Czarnoszki", v6d: "A village where almost all houses are wooden! Featuring lakes and unique terrain.",
-                j1t: "Courier Job", j1d: "Get in the van and deliver packages across Pomerania. Fast routes, steady cash.",
+                j1t: "Courier Job", j1d: "Get in the van and deliver packages across Pomerania. Fast routes, solid pay.",
                 j2t: "Free Roam", j2d: "Explore at your own pace, relax by the lake, or engage in unique RP scenarios."
             }
         };
@@ -265,6 +263,7 @@
             document.getElementById('desc-about').innerText = l.dA;
             document.getElementById('title-regions').innerText = l.tR;
             document.getElementById('title-jobs').innerText = l.tJobs;
+            document.getElementById('desc-discord').innerText = l.dDisc;
             document.getElementById('btn-discord').innerText = l.bD;
             document.getElementById('v1-t').innerText = l.v1t; document.getElementById('v1-d').innerText = l.v1d;
             document.getElementById('v2-t').innerText = l.v2t; document.getElementById('v2-d').innerText = l.v2d;
