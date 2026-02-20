@@ -20,6 +20,7 @@
             position: relative;
         }
 
+        /* --- BLOKADA ZAZNACZANIA TEKSTU --- */
         * { 
             margin: 0; 
             padding: 0; 
@@ -44,18 +45,12 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- PASEK NAWIGACJI GÓRNEJ (JĘZYK + POWRÓT) --- */
-        .top-nav-wrap {
+        /* --- SELEKTOR JĘZYKA (PRAWY GÓRNY RÓG) --- */
+        .lang-switch {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lang-switch, .back-to-top {
             background: rgba(0, 0, 0, 0.7);
             padding: 8px 15px;
             border-radius: 100px;
@@ -64,25 +59,7 @@
             -webkit-backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .back-to-top {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            color: var(--accent);
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.4s ease;
-            font-size: 1.2rem;
-            border: 1px solid rgba(255, 180, 0, 0.2);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+            gap: 10px;
         }
 
         .lang-btn {
@@ -97,6 +74,44 @@
         }
 
         .lang-btn.active { color: var(--accent); }
+
+        /* --- NOWA STRZAŁKA POWROTU (ŚRODEK DÓŁ) --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Ikona strzałki */
+        .back-to-top svg {
+            width: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
         /* --- HERO BANER --- */
         header { 
@@ -135,7 +150,9 @@
             text-transform: uppercase;
             text-decoration: none;
             border-radius: 2px;
+            transition: 0.3s;
         }
+        .cat-btn:hover { background: var(--accent); color: #000; }
 
         .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 50px 20px; overflow: hidden; }
 
@@ -152,6 +169,15 @@
         .info-card { background: var(--card); padding: 30px; border-radius: 4px; border: 1px solid #1f1f1f; width: 100%; }
         .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.4rem; }
         .info-card p { color: #888; line-height: 1.5; font-size: 0.95rem; }
+
+        .soon-box {
+            background: rgba(255, 180, 0, 0.05);
+            border: 1px dashed var(--accent);
+            padding: 60px;
+            text-align: center;
+            border-radius: 4px;
+        }
+        .soon-text { font-family: 'JetBrains Mono', monospace; font-size: 2rem; color: var(--accent); letter-spacing: 5px; }
 
         .discord-area { text-align: center; padding: 100px 20px; }
         .discord-link {
@@ -178,15 +204,15 @@
     <div id="cursor"></div>
     <div id="cursor-outline"></div>
 
-    <div class="top-nav-wrap">
-        <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0)">↑</button>
-        
-        <div class="lang-switch">
-            <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
-            <span style="color: #333;">|</span>
-            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-        </div>
+    <div class="lang-switch">
+        <button class="lang-btn active" id="btn-pl" onclick="setLang('pl')">PL</button>
+        <span style="color: #333;">|</span>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
+
+    <a href="javascript:window.scrollTo(0,0)" class="back-to-top" id="backToTop">
+        <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    </a>
 
     <header>
         <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
@@ -195,7 +221,7 @@
         <div class="nav-categories reveal">
             <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
             <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
-            <a href="#co-robic" class="cat-btn" id="nav-todo">Co robić?</a>
+            <a href="#cars" class="cat-btn" id="nav-cars">Pojazdy</a>
             <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
         </div>
     </header>
@@ -221,11 +247,10 @@
             </div>
         </section>
 
-        <section id="co-robic" class="reveal">
-            <h2 class="section-title" id="title-todo">Co u nas znajdziesz?</h2>
-            <div class="info-grid">
-                <div class="info-card"><h3 id="job1-t">Praca Kuriera</h3><p id="job1-d">Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.</p></div>
-                <div class="info-card"><h3 id="job2-t">Wolna Jazda</h3><p id="job2-d">Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.</p></div>
+        <section id="cars" class="reveal">
+            <h2 class="section-title" id="title-cars">Pojazdy</h2>
+            <div class="soon-box">
+                <div class="soon-text" id="text-soon">WKRÓTCE</div>
             </div>
         </section>
 
@@ -244,7 +269,7 @@
     <script>
         const translations = {
             pl: {
-                navA: "O grze", navR: "Regiony", navT: "Co robić?", navD: "Społeczność",
+                navA: "O grze", navR: "Regiony", navC: "Pojazdy", navD: "Społeczność",
                 tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
                 tR: "Twoja okolica",
                 v1t: "Rychnowy", v1d: "To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.",
@@ -253,12 +278,11 @@
                 v4t: "Kiełpin", v4d: "Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!",
                 v5t: "Zagórki", v5d: "Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.",
                 v6t: "Czarnoszki", v6d: "Pewnie wam kojarzy się z jednym... Ale ogólnie jest to wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywy teren to właśnie tu!",
-                tTodo: "Co u nas znajdziesz?", j1t: "Praca Kuriera", j1d: "Wrzucasz paczki na pakę i ruszasz w trasę. Od drzwi do drzwi – poznasz każdy zakamarek mapy przy okazji zarabiając kasę.",
-                j2t: "Wolna Jazda", j2d: "Nie lubisz zleceń? Żaden problem. Bierz auto, odpal radio i po prostu przejedź się przez powiat bez żadnego pośpiechu.",
+                tCars: "Pojazdy", tSoon: "WKRÓTCE",
                 tD: "Bądź na bieżąco", dD: "Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.", bD: "DOŁĄCZ DO NAS"
             },
             en: {
-                navA: "About", navR: "Regions", navT: "Activities", navD: "Community",
+                navA: "About", navR: "Regions", navC: "Cars", navD: "Community",
                 tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk.",
                 tR: "Your Neighborhood",
                 v1t: "Rychnowy", v1d: "This is where you first see our project. Located by national road DK22.",
@@ -267,8 +291,7 @@
                 v4t: "Kiełpin", v4d: "Largest village full of secrets. Westernmost point currently available!",
                 v5t: "Zagórki", v5d: "Urbex site, gravel pit and industrial plants.",
                 v6t: "Czarnoszki", v6d: "Wooden village with varied terrain, lakes and unique elevations.",
-                tTodo: "Activities", j1t: "Courier Job", j1d: "Deliver packages and earn cash while exploring the county.",
-                j2t: "Free Drive", j2d: "Just grab a car and drive at your own pace.",
+                tCars: "Vehicles", tSoon: "COMING SOON",
                 tD: "Stay Updated", dD: "Latest news and tests available on our Discord.", bD: "JOIN US"
             }
         };
@@ -280,7 +303,7 @@
             const l = translations[lang];
             document.getElementById('nav-about').innerText = l.navA;
             document.getElementById('nav-regions').innerText = l.navR;
-            document.getElementById('nav-todo').innerText = l.navT;
+            document.getElementById('nav-cars').innerText = l.navC;
             document.getElementById('nav-discord').innerText = l.navD;
             document.getElementById('title-about').innerText = l.tA;
             document.getElementById('desc-about').innerText = l.dA;
@@ -291,18 +314,17 @@
             document.getElementById('v4-t').innerText = l.v4t; document.getElementById('v4-d').innerText = l.v4d;
             document.getElementById('v5-t').innerText = l.v5t; document.getElementById('v5-d').innerText = l.v5d;
             document.getElementById('v6-t').innerText = l.v6t; document.getElementById('v6-d').innerText = l.v6d;
-            document.getElementById('title-todo').innerText = l.tTodo;
-            document.getElementById('job1-t').innerText = l.j1t; document.getElementById('job1-d').innerText = l.j1t;
-            document.getElementById('job2-t').innerText = l.j2t; document.getElementById('job2-d').innerText = l.j2d;
+            document.getElementById('title-cars').innerText = l.tCars;
+            document.getElementById('text-soon').innerText = l.tSoon;
             document.getElementById('title-discord').innerText = l.tD;
             document.getElementById('desc-discord').innerText = l.dD;
             document.getElementById('btn-discord').innerText = l.bD;
         }
 
-        // --- SKRYPT DLA PRZYCISKU POWROTU I KURSORA ---
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
         const backBtn = document.getElementById('backToTop');
+        const reveals = document.querySelectorAll('.reveal');
 
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
@@ -311,14 +333,13 @@
         });
 
         window.addEventListener('scroll', () => {
-            // Pokaż strzałkę po przewinięciu 300px
+            // Logika pokazywania strzałki
             if (window.scrollY > 300) {
                 backBtn.classList.add('visible');
             } else {
                 backBtn.classList.remove('visible');
             }
             
-            // Animacja sekcji
             reveals.forEach(el => {
                 const top = el.getBoundingClientRect().top;
                 if (top < window.innerHeight - 80) el.classList.add('active');
@@ -330,7 +351,6 @@
             el.addEventListener('mouseleave', () => { if(cursor) cursor.style.transform = 'scale(1)'; if(outline) outline.style.opacity = '0.5'; });
         });
 
-        const reveals = document.querySelectorAll('.reveal');
         window.addEventListener('load', () => {
              reveals.forEach(el => {
                 const top = el.getBoundingClientRect().top;
