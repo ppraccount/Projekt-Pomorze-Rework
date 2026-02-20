@@ -161,7 +161,7 @@
             <div class="nav-categories reveal">
                 <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
                 <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
-                <a href="#praca" class="cat-btn" id="nav-jobs">Zarobki</a>
+                <a href="#praca" class="cat-btn" id="nav-jobs">Aktywności</a>
                 <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
             </div>
         </header>
@@ -187,15 +187,15 @@
             </section>
 
             <section id="praca" class="reveal">
-                <h2 class="section-title" id="title-jobs">Praca i Zarobki</h2>
+                <h2 class="section-title" id="title-jobs">Co można robić?</h2>
                 <div class="info-grid">
                     <div class="info-card">
                         <h3 id="j1-t">Courier Job</h3>
                         <p id="j1-d">Wsiadaj w furgonetkę i dostarczaj paczki do mieszkańców Pomorza. Szybkie trasy, pewny pieniądz.</p>
                     </div>
                     <div class="info-card">
-                        <h3 id="j2-t">Free Roam Jobs</h3>
-                        <p id="j2-d">Pozwiedzaj sobie mape, lub podróżuj i odkrywaj nowe tereny! Albo po prostu odgrywaj Role-Play.</p>
+                        <h3 id="j2-t">Free Roam</h3>
+                        <p id="j2-d">Eksploruj mapę we własnym tempie, odpocznij nad jeziorem lub odgrywaj unikalne scenariusze RP z innymi.</p>
                     </div>
                 </div>
             </section>
@@ -222,17 +222,31 @@
         const translations = {
             pl: {
                 tabH: "Home", tabV: "Pojazdy",
-                navA: "O grze", navR: "Regiony", navJ: "Zarobki", navD: "Społeczność",
-                tA: "O projekcie", tR: "Twoja okolica", tJobs: "Praca i Zarobki", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
-                j1t: "Courier Job", j1d: "Dostarczaj paczki mieszkańcom Pomorza. Szybkie trasy, pewny pieniądz.",
-                j2t: "Free Roam Jobs", j2d: "Znajduj zlecenia bezpośrednio na mapie. Eksploruj i zarabiaj."
+                navA: "O grze", navR: "Regiony", navJ: "Aktywności", navD: "Społeczność",
+                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
+                tR: "Twoja okolica", tJobs: "Co można robić?", tCars: "Pojazdy", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS",
+                v1t: "Rychnowy", v1d: "Miejscowość przy drodze krajowej DK22. Pierwszy punkt styku z naszym światem.",
+                v2t: "Krery", v2d: "Najmniejsza wieś, strategicznie położona.",
+                v3t: "Krzyżanki", v3d: "Pierwsza miejscowość reworku. Dużo ukrytych smaczków.",
+                v4t: "Kiełpin", v4d: "Największa wieś na zachodzie, pełna tajemnic.",
+                v5t: "Zagórki", v5d: "Przemysłowe serce mapy: żwirownia, urbex i zakłady.",
+                v6t: "Czarnoszki", v6d: "Drewniana zabudowa, jeziora i unikalne krzywizny terenu.",
+                j1t: "Courier Job", j1d: "Wsiadaj w furgonetkę i dostarczaj paczki do mieszkańców Pomorza. Szybkie trasy, pewny pieniądz.",
+                j2t: "Free Roam", j2d: "Eksploruj mapę we własnym tempie, odpocznij nad jeziorem lub odgrywaj unikalne scenariusze RP z innymi."
             },
             en: {
                 tabH: "Home", tabV: "Vehicles",
-                navA: "About", navR: "Regions", navJ: "Jobs", navD: "Community",
-                tA: "The Project", tR: "Your Neighborhood", tJobs: "Economy", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
-                j1t: "Courier Job", j1d: "Deliver packages across Pomerania. Fast routes, solid pay.",
-                j2t: "Free Roam Jobs", j2d: "Pozwiedzaj sobie mape, lub podróżuj i odkrywaj nowe tereny! Albo po prostu odgrywaj Role-Play."
+                navA: "About", navR: "Regions", navJ: "Activities", navD: "Community",
+                tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk. We create a world where every road, house, and tree has its place.",
+                tR: "Your Neighborhood", tJobs: "What to do?", tCars: "Vehicles", tSoon: "COMING SOON", bD: "JOIN US",
+                v1t: "Rychnowy", v1d: "A town by the DK22 national road. The first point of contact with our world.",
+                v2t: "Krery", v2d: "The smallest village, strategically located.",
+                v3t: "Krzyżanki", v3d: "The first rework location. Plenty of hidden easter eggs.",
+                v4t: "Kiełpin", v4d: "The largest village in the west, full of secrets.",
+                v5t: "Zagórki", v5d: "The industrial heart of the map: gravel pit, urbex, and factories.",
+                v6t: "Czarnoszki", v6d: "Wooden buildings, lakes, and unique terrain shapes.",
+                j1t: "Courier Job", j1d: "Get in the van and deliver packages to the residents. Fast routes, steady cash.",
+                j2t: "Free Roam", j2d: "Explore the map at your own pace, relax by the lake, or play out unique RP scenarios with others."
             }
         };
 
@@ -240,20 +254,37 @@
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-' + lang).classList.add('active');
             const l = translations[lang];
+            
+            // Taby i Nav
             document.getElementById('tab-home-btn').innerText = l.tabH;
             document.getElementById('tab-cars-btn').innerText = l.tabV;
             document.getElementById('nav-about').innerText = l.navA;
             document.getElementById('nav-regions').innerText = l.navR;
             document.getElementById('nav-jobs').innerText = l.navJ;
             document.getElementById('nav-discord').innerText = l.navD;
+
+            // Sekcje Home
             document.getElementById('title-about').innerText = l.tA;
+            document.getElementById('desc-about').innerText = l.dA;
             document.getElementById('title-regions').innerText = l.tR;
             document.getElementById('title-jobs').innerText = l.tJobs;
-            document.getElementById('title-cars').innerText = l.tCars;
-            document.getElementById('text-soon').innerText = l.tSoon;
             document.getElementById('btn-discord').innerText = l.bD;
+
+            // Miasta
+            document.getElementById('v1-t').innerText = l.v1t; document.getElementById('v1-d').innerText = l.v1d;
+            document.getElementById('v2-t').innerText = l.v2t; document.getElementById('v2-d').innerText = l.v2d;
+            document.getElementById('v3-t').innerText = l.v3t; document.getElementById('v3-d').innerText = l.v3d;
+            document.getElementById('v4-t').innerText = l.v4t; document.getElementById('v4-d').innerText = l.v4d;
+            document.getElementById('v5-t').innerText = l.v5t; document.getElementById('v5-d').innerText = l.v5d;
+            document.getElementById('v6-t').innerText = l.v6t; document.getElementById('v6-d').innerText = l.v6d;
+
+            // Prace/Aktywności
             document.getElementById('j1-t').innerText = l.j1t; document.getElementById('j1-d').innerText = l.j1d;
             document.getElementById('j2-t').innerText = l.j2t; document.getElementById('j2-d').innerText = l.j2d;
+
+            // Zakładka Vehicles
+            document.getElementById('title-cars').innerText = l.tCars;
+            document.getElementById('text-soon').innerText = l.tSoon;
         }
 
         function openTab(tabName) {
@@ -272,6 +303,7 @@
             }, 400);
         }
 
+        // Kursor i Scroll (bez zmian)
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
         const backBtn = document.getElementById('backToTop');
@@ -301,4 +333,3 @@
     </script>
 </body>
 </html>
-
