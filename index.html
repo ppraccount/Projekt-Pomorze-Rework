@@ -17,7 +17,9 @@
         html, body {
             max-width: 100%;
             overflow-x: hidden;
-            position: relative;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         /* --- BLOKADA ZAZNACZANIA --- */
@@ -28,14 +30,11 @@
             scroll-behavior: smooth;
             -webkit-user-select: none;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
         
         @media (pointer: fine) {
             * { cursor: none; }
         }
-
-        body { background-color: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; }
 
         /* --- KURSOR --- */
         #cursor { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s; box-shadow: 0 0 15px var(--accent); }
@@ -45,22 +44,9 @@
             #cursor, #cursor-outline { display: none !important; }
         }
 
-        /* --- GÓRNE NAVBARKI (ZACHOWANY POZIOM) --- */
-        .top-nav-left {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            display: flex;
-            gap: 10px;
-        }
-
-        .top-nav-right {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
-        }
+        /* --- TOP NAV (TABS & LANG) --- */
+        .top-nav-left { position: fixed; top: 20px; left: 20px; z-index: 1001; }
+        .top-nav-right { position: fixed; top: 20px; right: 20px; z-index: 1001; }
 
         .nav-pill {
             background: rgba(0, 0, 0, 0.7);
@@ -74,30 +60,32 @@
             gap: 10px;
         }
 
-        .nav-link-btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-        .nav-link-btn:hover { color: var(--accent); }
-
-        .lang-btn {
+        .tab-btn, .lang-btn {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             color: #666;
-            transition: 0.3s;
+            text-transform: uppercase;
             font-weight: 700;
             border: none;
             background: none;
             padding: 5px;
+            transition: 0.3s;
         }
-        .lang-btn.active { color: var(--accent); }
+        .tab-btn.active, .lang-btn.active { color: var(--accent); }
 
-        /* --- STRZAŁKA POWROTU --- */
+        /* --- CONTENT WRAPPER & ANIMATION --- */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- BACK TO TOP (ŚRODEK) --- */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -118,82 +106,31 @@
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .back-to-top.visible { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .back-to-top svg { width: 20px; fill: none; stroke: currentColor; stroke-width: 3; }
 
-        /* --- HERO --- */
+        /* --- SECTIONS --- */
         header { 
-            height: 100vh; 
-            width: 100%;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), 
-                        url('https://i.imgur.com/IfxxSeZ.png'); 
-            background-size: cover;
-            background-position: center;
-            padding: 0 20px;
+            height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(to bottom, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 1) 100%), url('https://i.imgur.com/IfxxSeZ.png'); 
+            background-size: cover; background-position: center; padding: 0 20px;
         }
-
-        .hero-title { 
-            font-family: 'Syne', sans-serif; 
-            font-size: clamp(2.5rem, 12vw, 9rem); 
-            line-height: 0.9; 
-            margin-bottom: 30px; 
-            text-transform: uppercase; 
-        }
+        .hero-title { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 12vw, 9rem); line-height: 0.9; text-transform: uppercase; }
         .hero-title span { -webkit-text-stroke: 1px var(--accent); -webkit-text-fill-color: transparent; }
 
-        .nav-categories { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 50px; width: 100%; }
-        .cat-btn {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,180,0,0.3);
-            color: var(--accent);
-            padding: 12px 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 2px;
-        }
-
-        /* --- SEKCJE --- */
         .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
-        section { padding: 80px 0; border-top: 1px solid #1a1a1a; width: 100%; }
+        section { padding: 80px 0; border-top: 1px solid #1a1a1a; }
         .section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 40px; color: var(--accent); text-transform: uppercase; }
 
-        .info-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 20px; 
-        }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .info-card { background: var(--card); padding: 30px; border-radius: 4px; border: 1px solid #1f1f1f; }
-        .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; font-size: 1.4rem; }
-        .info-card p { color: #888; line-height: 1.5; font-size: 0.95rem; }
+        .info-card h3 { font-family: 'Syne', sans-serif; margin-bottom: 15px; }
 
-        .soon-box {
-            background: rgba(255, 180, 0, 0.05);
-            border: 1px dashed var(--accent);
-            padding: 60px;
-            text-align: center;
-            border-radius: 4px;
-        }
-        .soon-text { font-family: 'JetBrains Mono', monospace; font-size: 2rem; color: var(--accent); letter-spacing: 5px; }
+        .soon-box { border: 1px dashed var(--accent); padding: 100px 20px; text-align: center; border-radius: 4px; margin-top: 50px; }
+        .soon-text { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; color: var(--accent); letter-spacing: 10px; }
 
         .discord-area { text-align: center; padding: 100px 20px; }
-        .discord-link {
-            display: inline-block;
-            background: var(--discord);
-            color: white;
-            padding: 18px 40px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 700;
-        }
+        .discord-link { display: inline-block; background: var(--discord); color: white; padding: 18px 40px; border-radius: 5px; text-decoration: none; font-weight: 700; }
 
-        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; }
+        footer { padding: 50px; text-align: center; color: #333; font-family: 'JetBrains Mono'; font-size: 0.7rem; border-top: 1px solid #1a1a1a; }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -206,9 +143,9 @@
 
     <div class="top-nav-left">
         <div class="nav-pill">
-            <a href="javascript:window.scrollTo(0,0)" class="nav-link-btn" id="nav-home-top">Home</a>
+            <button class="tab-btn active" id="tab-home-btn" onclick="openTab('home')">Home</button>
             <span style="color: #333;">|</span>
-            <a href="#cars" class="nav-link-btn" id="nav-cars-top">Vehicles</a>
+            <button class="tab-btn" id="tab-cars-btn" onclick="openTab('cars')">Vehicles</button>
         </div>
     </div>
 
@@ -221,147 +158,124 @@
     </div>
 
     <a href="javascript:window.scrollTo(0,0)" class="back-to-top" id="backToTop">
-        <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
     </a>
 
-    <header>
-        <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
-        <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
-        
-        <div class="nav-categories reveal">
-            <a href="#o-grze" class="cat-btn" id="nav-about">O grze</a>
-            <a href="#tereny" class="cat-btn" id="nav-regions">Regiony</a>
-            <a href="#cars" class="cat-btn" id="nav-cars">Pojazdy</a>
-            <a href="#discord" class="cat-btn" id="nav-discord">Społeczność</a>
+    <div id="home-content" class="tab-content active">
+        <header>
+            <div class="reveal" style="margin-bottom: 10px; font-family: 'JetBrains Mono'; letter-spacing: 5px; color: var(--accent);">REWORK V2</div>
+            <h1 class="hero-title reveal">Projekt<br><span>Pomorze</span></h1>
+        </header>
+
+        <div class="container">
+            <section id="o-grze" class="reveal">
+                <h2 class="section-title" id="title-about">O projekcie</h2>
+                <p id="desc-about" style="font-size: 1.2rem; color: #bbb; max-width: 800px;">Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór.</p>
+            </section>
+
+            <section id="tereny" class="reveal">
+                <h2 class="section-title" id="title-regions">Twoja okolica</h2>
+                <div class="info-grid">
+                    <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy...</p></div>
+                    <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
+                    <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś, gdzie masz dużo ukrytych easter eggów.</p></div>
+                </div>
+            </section>
+
+            <section id="discord" class="discord-area reveal">
+                <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
+                <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
+            </section>
         </div>
-    </header>
+    </div>
 
-    <div class="container">
-        <section id="o-grze" class="reveal">
-            <h2 class="section-title" id="title-about">O projekcie</h2>
-            <p id="desc-about" style="font-size: 1.2rem; color: #bbb; max-width: 800px;">
-                Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.
-            </p>
-        </section>
-
-        <section id="tereny" class="reveal">
-            <h2 class="section-title" id="title-regions">Twoja okolica</h2>
-            <div class="info-grid">
-                <div class="info-card"><h3 id="v1-t">Rychnowy</h3><p id="v1-d">To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.</p></div>
-                <div class="info-card"><h3 id="v2-t">Krery</h3><p id="v2-d">Najmniejsza wieś, z której wszędzie dojedziesz.</p></div>
-                <div class="info-card"><h3 id="v3-t">Krzyżanki</h3><p id="v3-d">Większa wieś, gdzie masz dużo ukrytych easter eggów. Była to pierwsza miejscowość wykonana w nowej odsłonie projektu!</p></div>
-                <div class="info-card"><h3 id="v4-t">Kiełpin</h3><p id="v4-d">Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!</p></div>
-                <div class="info-card"><h3 id="v5-t">Zagórki</h3><p id="v5-d">Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.</p></div>
-                <div class="info-card"><h3 id="v6-t">Czarnoszki</h3><p id="v6-d">Pewnie wam kojarzy się z jednym... Ale ogólnie jest to wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywy teren to właśnie tu!</p></div>
-            </div>
-        </section>
-
-        <section id="cars" class="reveal">
-            <h2 class="section-title" id="title-cars">Pojazdy</h2>
+    <div id="cars-content" class="tab-content">
+        <div class="container" style="padding-top: 150px;">
+            <h2 class="section-title" id="title-cars">Nasze Maszyny</h2>
             <div class="soon-box">
                 <div class="soon-text" id="text-soon">WKRÓTCE</div>
             </div>
-        </section>
-
-        <section id="discord" class="discord-area reveal">
-            <h2 class="section-title" id="title-discord">Bądź na bieżąco</h2>
-            <p id="desc-discord" style="margin-bottom: 40px; color: #888;">Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.</p>
-            <a href="https://discord.gg/gpmbAttYZF" class="discord-link" target="_blank" id="btn-discord">DOŁĄCZ DO NAS</a>
-        </section>
+        </div>
     </div>
 
     <footer>PROJEKT POMORZE: REWORK // 2026</footer>
 
     <script>
+        // TRANSLACJA
         const translations = {
             pl: {
-                navHome: "Home", navVehicles: "Samochody",
-                navA: "O grze", navR: "Regiony", navC: "Pojazdy", navD: "Społeczność",
-                tA: "O projekcie", dA: "Projekt Pomorze to coś więcej niż mapa. To klimat, który czujesz, gdy wjeżdżasz na dziurawy asfalt pod wieczór. Tworzymy świat, w którym każda droga, dom i drzewo mają swoje miejsce.",
-                tR: "Twoja okolica",
-                v1t: "Rychnowy", v1d: "To tutaj pierwszy raz widzisz nasz projekt na oczy. Miejscowość przy jednej z dróg krajowych w kraju – przy DK22.",
-                v2t: "Krery", v2d: "Najmniejsza wieś, z której wszędzie dojedziesz.",
-                v3t: "Krzyżanki", v3d: "Większa wieś, gdzie masz dużo ukrytych easter eggów. Była to pierwsza miejscowość wykonana w nowej odsłonie projektu!",
-                v4t: "Kiełpin", v4d: "Największa wieś, która skrywa wiele tajemnic. Najdalej wysunięta miejscowość aktualnie na zachód w grze!",
-                v5t: "Zagórki", v5d: "Tutaj jest urbex, a poza tym znajduje się tutaj żwirownia oraz zakłady przemysłowe.",
-                v6t: "Czarnoszki", v6d: "Pewnie wam kojarzy się z jednym... Ale ogólnie jest to wieś, w której wszystkie domki są praktycznie drewniane! Jest tutaj fajnie urozmaicony teren, jeziora i krzywy teren to właśnie tu!",
-                tCars: "Pojazdy", tSoon: "WKRÓTCE",
-                tD: "Bądź na bieżąco", dD: "Najnowsze screeny, daty testów i dyskusje – wszystko dzieje się na naszym Discordzie.", bD: "DOŁĄCZ DO NAS"
+                tabH: "Home", tabV: "Pojazdy",
+                tA: "O projekcie", tR: "Twoja okolica", tCars: "Nasze Maszyny", tSoon: "WKRÓTCE", bD: "DOŁĄCZ DO NAS"
             },
             en: {
-                navHome: "Home", navVehicles: "Vehicles",
-                navA: "About", navR: "Regions", navC: "Cars", navD: "Community",
-                tA: "The Project", dA: "Project Pomorze is more than just a map. It's the vibe you feel on the worn-out asphalt at dusk.",
-                tR: "Your Neighborhood",
-                v1t: "Rychnowy", v1d: "This is where you first see our project. Located by national road DK22.",
-                v2t: "Krery", v2d: "Smallest village with easy access to everywhere.",
-                v3t: "Krzyżanki", v3d: "Larger village with many hidden easter eggs. First one built for the Rework!",
-                v4t: "Kiełpin", v4d: "Largest village full of secrets. Westernmost point currently available!",
-                v5t: "Zagórki", v5d: "Urbex site, gravel pit and industrial plants.",
-                v6t: "Czarnoszki", v6d: "Wooden village with varied terrain, lakes and unique elevations.",
-                tCars: "Vehicles", tSoon: "COMING SOON",
-                tD: "Stay Updated", dD: "Latest news and tests available on our Discord.", bD: "JOIN US"
+                tabH: "Home", tabV: "Vehicles",
+                tA: "The Project", tR: "Your Neighborhood", tCars: "Our Vehicles", tSoon: "COMING SOON", bD: "JOIN US"
             }
         };
 
         function setLang(lang) {
-            document.getElementById('btn-pl').classList.remove('active');
-            document.getElementById('btn-en').classList.remove('active');
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-' + lang).classList.add('active');
             const l = translations[lang];
-            document.getElementById('nav-home-top').innerText = l.navHome;
-            document.getElementById('nav-cars-top').innerText = l.navVehicles;
-            document.getElementById('nav-about').innerText = l.navA;
-            document.getElementById('nav-regions').innerText = l.navR;
-            document.getElementById('nav-cars').innerText = l.navC;
-            document.getElementById('nav-discord').innerText = l.navD;
+            document.getElementById('tab-home-btn').innerText = l.tabH;
+            document.getElementById('tab-cars-btn').innerText = l.tabV;
             document.getElementById('title-about').innerText = l.tA;
-            document.getElementById('desc-about').innerText = l.dA;
             document.getElementById('title-regions').innerText = l.tR;
-            document.getElementById('v1-t').innerText = l.v1t; document.getElementById('v1-d').innerText = l.v1d;
-            document.getElementById('v2-t').innerText = l.v2t; document.getElementById('v2-d').innerText = l.v2d;
-            document.getElementById('v3-t').innerText = l.v3t; document.getElementById('v3-d').innerText = l.v3d;
-            document.getElementById('v4-t').innerText = l.v4t; document.getElementById('v4-d').innerText = l.v4d;
-            document.getElementById('v5-t').innerText = l.v5t; document.getElementById('v5-d').innerText = l.v5d;
-            document.getElementById('v6-t').innerText = l.v6t; document.getElementById('v6-d').innerText = l.v6d;
             document.getElementById('title-cars').innerText = l.tCars;
             document.getElementById('text-soon').innerText = l.tSoon;
-            document.getElementById('title-discord').innerText = l.tD;
-            document.getElementById('desc-discord').innerText = l.dD;
             document.getElementById('btn-discord').innerText = l.bD;
         }
 
+        // PRZEŁĄCZANIE TABÓW
+        function openTab(tabName) {
+            // Animacja wygaszania
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.opacity = '0';
+                setTimeout(() => tab.classList.remove('active'), 300);
+            });
+
+            // Aktywacja przycisku
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tabName + '-btn').classList.add('active');
+
+            // Pokazanie nowej treści
+            setTimeout(() => {
+                const activeTab = document.getElementById(tabName + '-content');
+                activeTab.classList.add('active');
+                setTimeout(() => activeTab.style.opacity = '1', 50);
+                window.scrollTo(0,0);
+                scrollReveal(); // odśwież animacje pojawiania się
+            }, 300);
+        }
+
+        // KURSOR I RESZTA
         const cursor = document.getElementById('cursor');
         const outline = document.getElementById('cursor-outline');
         const backBtn = document.getElementById('backToTop');
-        const reveals = document.querySelectorAll('.reveal');
 
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
             outline.style.left = e.clientX + 'px'; outline.style.top = e.clientY + 'px';
         });
 
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', scrollReveal);
+
+        function scrollReveal() {
             if (window.scrollY > 300) backBtn.classList.add('visible');
             else backBtn.classList.remove('visible');
             
-            reveals.forEach(el => {
+            document.querySelectorAll('.reveal').forEach(el => {
                 const top = el.getBoundingClientRect().top;
                 if (top < window.innerHeight - 80) el.classList.add('active');
             });
-        });
+        }
 
         document.querySelectorAll('a, button, .info-card').forEach(el => {
-            el.addEventListener('mouseenter', () => { if(cursor) cursor.style.transform = 'scale(5)'; if(outline) outline.style.opacity = '0'; });
-            el.addEventListener('mouseleave', () => { if(cursor) cursor.style.transform = 'scale(1)'; if(outline) outline.style.opacity = '0.5'; });
+            el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(5)'; outline.style.opacity = '0'; });
+            el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; outline.style.opacity = '0.5'; });
         });
 
-        window.onload = () => {
-             reveals.forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 80) el.classList.add('active');
-            });
-        };
+        window.onload = scrollReveal;
     </script>
 </body>
 </html>
